@@ -978,6 +978,24 @@
           },
           "styles" : {
             "$ref" : "#/components/schemas/BuilderContentStyles"
+          },
+          "labelPreview": {
+            "type": "string",
+            "description": "Text displayed in the launcher element. If not set the text container is not rendered."
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "URL for custom image in launcher, overrides the icon settings"
+          },
+          "imageBorderColor": {
+            "type": "string",
+            "description": "CSS color to be used for a border around the custom image in launcher",
+            "default": "If not set will use the brand color set in the configuration"
+          },
+          "imageBorderWidth": {
+            "type": "string",
+            "description": "CSS line width value for the border around the custom image in launcher",
+            "default": "5px"
           }
         }
       },
