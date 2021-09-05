@@ -6,7 +6,7 @@
     "contact" : {
       "email" : "support@conversional.de"
     },
-    "version" : "3.0.3"
+    "version" : "3.0.4"
   },
   "servers" : [ {
     "url" : "https://testing.roomtailors.de/api/2.0/",
@@ -139,11 +139,11 @@
           "400" : {
             "description" : "Bad request. Usually in case of invalid data."
           },
-          "500" : {
-            "description" : "Internal error."
-          },
           "404" : {
             "description" : "Questionnaire id not found."
+          },
+          "500" : {
+            "description" : "Internal error."
           }
         }
       }
@@ -345,12 +345,12 @@
           }
         } ],
         "responses" : {
-          "404" : {
-            "description" : "Could not find journey related to provided token. Usually if result is no longer available.",
+          "200" : {
+            "description" : "An array of locations and project_ids to populate Timekit. Response can be empty, if no locations were close.",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/inline_response_404"
+                  "$ref" : "#/components/schemas/Locations"
                 }
               }
             }
@@ -365,22 +365,22 @@
               }
             }
           },
+          "404" : {
+            "description" : "Could not find journey related to provided token. Usually if result is no longer available.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          },
           "500" : {
             "description" : "No projects found. Internal configuration error.",
             "content" : {
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/inline_response_500"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "An array of locations and project_ids to populate Timekit. Response can be empty, if no locations were close.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Locations"
                 }
               }
             }
@@ -404,22 +404,22 @@
           }
         } ],
         "responses" : {
-          "404" : {
-            "description" : "Could not find project with this Id",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/inline_response_404_1"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "An array of timeslots with start and end times and the associated resource.",
             "content" : {
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/LocationsAvailability"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Could not find project with this Id",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_404_1"
                 }
               }
             }
@@ -979,23 +979,23 @@
           "styles" : {
             "$ref" : "#/components/schemas/BuilderContentStyles"
           },
-          "labelPreview": {
-            "type": "string",
-            "description": "Text displayed in the launcher element. If not set the text container is not rendered."
+          "labelPreview" : {
+            "type" : "string",
+            "description" : "Text displayed in the launcher element. If not set the text container is not rendered."
           },
-          "imageUrl": {
-            "type": "string",
-            "description": "URL for custom image in launcher, overrides the icon settings"
+          "imageUrl" : {
+            "type" : "string",
+            "description" : "URL for custom image in launcher, overrides the icon settings"
           },
-          "imageBorderColor": {
-            "type": "string",
-            "description": "CSS color to be used for a border around the custom image in launcher",
-            "default": "If not set will use the brand color set in the configuration"
+          "imageBorderColor" : {
+            "type" : "string",
+            "description" : "CSS color to be used for a border around the custom image in launcher",
+            "default" : "If not set will use the brand color set in the configuration"
           },
-          "imageBorderWidth": {
-            "type": "string",
-            "description": "CSS line width value for the border around the custom image in launcher",
-            "default": "5px"
+          "imageBorderWidth" : {
+            "type" : "string",
+            "description" : "CSS line width value for the border around the custom image in launcher",
+            "default" : "5px"
           }
         }
       },
@@ -1278,6 +1278,12 @@
               "description" : "Can have any number of key-value pairs that serve as payload of the service request."
             },
             "description" : "If key is included, a service request will be automatically created (even if no values under this key are present)."
+          },
+          "meta" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
           }
         }
       },
