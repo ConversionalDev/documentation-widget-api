@@ -426,6 +426,93 @@
           }
         }
       }
+    },
+    "/content/{content_hashid}": {
+      "get": {
+        "tags": [
+            "API"
+        ],
+        "description": "get content with customer profile and journey config.",
+        "parameters": [
+          {
+            "name": "result_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "applicarion/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ContentResponse"
+                    }
+                  ]
+                },
+                "example": {
+                  "content": {
+                    "Content": {
+                      "format": "headerImage",
+                      "type": "headerImage",
+                      "props": {
+                        "title": "Nordisch Schick",
+                        "subtitle": "Farbsicher - Modisch - Elegant"
+                      }
+                    },
+                    "Children": []
+                  },
+                  "customer": {
+                    "email": "hosseinzeinalii@gmail.com",
+                    "firstname": "Hossein",
+                    "firstname_genitive": "Hosseins",
+                    "lastname": "Zeinali",
+                    "gender": "1",
+                    "active": null,
+                    "alias": "W4jNa46"
+                  },
+                  "journey_config": {
+                    "base_url": "https://testing.roomtailors.de/journeys/preview/mz4W2lBg",
+                    "brand_color": "#b2ccd3",
+                    "second_color": "",
+                    "logo": "https://testing.roomtailors.de/img/demoshop/logo.png",
+                    "title": "Schon gespannt?",
+                    "subtitle": "Über den Link, den Sie per E-Mail erhalten, können Sie Ihr Ergebnis speichern, teilen und später wieder aufrufen.",
+                    "tsandcs": "https://roomtailors.de/pages/agb",
+                    "dataprotection": "https://roomtailors.de/pages/datenschutz",
+                    "callToAction": {
+                      "launcher": true
+                    },
+                    "locale": {
+                      "timezone": "Europe/Berlin"
+                    }
+                  },
+                  "profile": {
+                    "color": [
+                        "orange",
+                        "brown"
+                    ],
+                    "price_segment": [
+                        "31"
+                    ],
+                    "delivery_time": [
+                        "65"
+                    ],
+                    "meta_userId": [
+                        "AnyValue"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -1486,6 +1573,71 @@
         "type" : "apiKey",
         "name" : "apiKey",
         "in" : "query"
+      }
+    },
+    {
+      "ContentItem": {
+        "type": "object",
+        "properties": {
+          "format": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "props": {
+            "type": "array"
+          }
+        }
+      },
+      "ContentResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "object",
+            "properties": {
+              "Content": {
+                "$ref": "#/components/schemas/ContentResponse"
+              },
+              "Children": {
+                "type": "array",
+                "items": "#/components/schemas/ContentResponse"
+              }
+            }
+          },
+          "customer": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "firstname": {
+                "type": "string"
+              },
+              "firstname_genitive": {
+                "type": "string"
+              },
+              "lastname": {
+                "type": "string"
+              },
+              "gender": {
+                "type": "boolean"
+              },
+              "active": {
+                "type": "boolean"
+              },
+              "alias": {
+                "type": "string"
+              }
+            }
+          },
+          "journey_config": {
+            "type": "array"
+          },
+          "profile": {
+            "type": "array"
+          }
+        }
       }
     }
   }
